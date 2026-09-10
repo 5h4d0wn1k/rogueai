@@ -1,4 +1,5 @@
 # rogueai
+![tests](https://github.com/5h4d0wn1k/rogueai/actions/workflows/ci.yml/badge.svg) ![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 Agentic AI red-team & adversarial agent orchestration framework. **Authorized lab testing only.**
 
@@ -197,3 +198,6 @@ test counts, timings).
 
 MIT — see LICENSE. This project ships a legal kit (`SECURITY.md`,
 `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `AUTHORS`). Authorized-use only.
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md).
