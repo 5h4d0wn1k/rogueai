@@ -1,0 +1,10 @@
+{
+  "name": "ssh",
+  "goal": "validation of default credentials on the lab ssh fixture",
+  "note": "recon -> auth brute chain against the local ssh fixture",
+  "chain": [
+    {"tool": "port_probe", "args": {"target": "lab://ssh"}},
+    {"tool": "cred_spray", "args": {"target": "lab://ssh"}},
+    {"tool": "write_note", "args": {"note": "ssh default creds validated in lab"}}
+  ]
+}

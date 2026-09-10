@@ -1,0 +1,11 @@
+{
+  "name": "vault",
+  "goal": "obtain vault flag from lab vault",
+  "note": "recon -> exploit -> exfil against the local vault fixture",
+  "chain": [
+    {"tool": "port_probe", "args": {"target": "lab://vault"}},
+    {"tool": "vault_read", "args": {"target": "lab://vault"}},
+    {"tool": "write_note", "args": {"note": "vault flag exfiltrated in lab"}},
+    {"tool": "query_state", "args": {}}
+  ]
+}

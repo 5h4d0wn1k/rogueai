@@ -1,0 +1,11 @@
+{
+  "name": "web",
+  "goal": "inventory of web injection points in the lab http app",
+  "note": "recon -> enum -> exploit chain against the local http app",
+  "chain": [
+    {"tool": "port_probe", "args": {"target": "lab://http"}},
+    {"tool": "dyn_sqli", "args": {"target": "lab://http"}},
+    {"tool": "xss", "args": {"target": "lab://http"}},
+    {"tool": "write_note", "args": {"note": "web injection inventory recorded in lab"}}
+  ]
+}
