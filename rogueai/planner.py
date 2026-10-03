@@ -194,10 +194,27 @@ class LLMPlanner:
                 data = json.loads(r.read().decode("utf-8"))
         except Exception as e:
             raise PlannerConfigError(f"LLM planner request failed: {e}")
-        content = data["choices"][0]["message"]["content"]
-        steps_json = json.loads(content)
+        try:
+            content = data["choices"][0]["message"]["content"]
+            # Strip markdown code fences (most common LLM output format)
+            if isinstance(content, str):
+                content = content.strip()
+                if content.startswith("```"):
+                    content = content.split("\n", 1)[1] if "\n" in content else content
+                    if content.endswith("```"):
+                        content = content[:-3].rstrip("\n")
+                    content = content.strip()
+            steps_json = json.loads(content)
+            items = steps_json["steps"]
+        except (KeyError, IndexError, TypeError, ValueError) as e:
+            raise PlannerConfigError(
+                f"LLM planner returned an unusable plan ({e}); expected "
+                f'{{"steps": [{{"tool": ..., "args": {{}}}}]}}'
+            ) from e
+        if not isinstance(items, list):
+            raise PlannerConfigError("LLM planner 'steps' must be a list")
         steps = []
-        for item in steps_json["steps"]:
+        for item in items:
             tool = item.get("tool")
             if tool not in REGISTRY:
                 raise PlannerConfigError(f"LLM planner produced unknown tool {tool!r}")
